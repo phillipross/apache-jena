@@ -32,6 +32,8 @@
         <node.version>v20.11.0</node.version>
         <yarn.version>v1.22.17</yarn.version>
         <automatic.module.name>org.apache.jena.fuseki.ui</automatic.module.name>
+
+        <jena-fuseki-ui.e2e.test.skip>false</jena-fuseki-ui.e2e.test.skip>
     </properties>
 
     <build>
@@ -114,6 +116,7 @@
                                 <FUSEKI_PORT>${org.apache.jena.fuseki.port}</FUSEKI_PORT>
                             </environmentVariables>
                             <arguments>run test:e2e</arguments>
+                            <skip>${jena-fuseki-ui.e2e.test.skip}</skip>
                         </configuration>
                     </execution>
                 </executions>
