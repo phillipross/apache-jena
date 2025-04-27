@@ -4,13 +4,13 @@
 # NOTE: The just recipes defined below assume sdkman is installed and used for java and maven selection.
 #       Recipes that utilize docker containers assume the existence of the specific docker image existing locally
 
-export JAVA_VER_DISTRO_17 := "17.0.10-zulu"
-export JAVA_VER_DISTRO_21 := "21.0.2-zulu"
+export JAVA_VER_DISTRO_17 := "17.0.15-zulu"
+export JAVA_VER_DISTRO_21 := "21.0.7-zulu"
 export DOCKER_CMD := "docker container run --rm -it"
 export VOL_NAME := "apache-jena"
 export M2_REPO := "/root/.m2/repository"
 export BLD_DIR := "/usr/src/build"
-export IMG := "llsem-ubuntu-maven"
+export IMG := "ghcr.io/luminositylabs/llsem-ubuntu-maven"
 
 default:
   @echo "Invoke just --list to see a list of possible recipes to run"
