@@ -4,8 +4,7 @@
 # NOTE: The just recipes defined below assume sdkman is installed and used for java and maven selection.
 #       Recipes that utilize docker containers assume the existence of the specific docker image existing locally
 
-export JAVA_VER_DISTRO_17 := "17.0.16-zulu"
-export JAVA_VER_DISTRO_21 := "21.0.8-zulu"
+export JAVA_VER_DISTRO_21 := "21.0.11-zulu"
 export DOCKER_CMD := "docker container run --rm -it"
 export VOL_NAME := "apache-jena"
 export M2_REPO := "/root/.m2/repository"
@@ -15,12 +14,7 @@ export IMG := "ghcr.io/luminositylabs/llsem-ubuntu-maven"
 default:
   @echo "Invoke just --list to see a list of possible recipes to run"
 
-clean: clean-17
-
-clean-17:
-  #!/usr/bin/env bash -l
-  sdk use java ${JAVA_VER_DISTRO_17}
-  mvn clean
+clean: clean-21
 
 clean-21:
   #!/usr/bin/env bash -l
@@ -28,12 +22,7 @@ clean-21:
   mvn clean
 
 
-clean-install: clean-install-17
-
-clean-install-17: clean-17
-  #!/usr/bin/env bash -l
-  sdk use java ${JAVA_VER_DISTRO_17}
-  mvn install
+clean-install: clean-install-21
 
 clean-install-21: clean-21
   #!/usr/bin/env bash -l
@@ -41,12 +30,7 @@ clean-install-21: clean-21
   mvn install
 
 
-verify: verify-17
-
-verify-17:
-  #!/usr/bin/env bash -l
-  sdk use java ${JAVA_VER_DISTRO_17}
-  mvn verify
+verify: verify-21
 
 verify-21:
   #!/usr/bin/env bash -l
@@ -54,12 +38,7 @@ verify-21:
   mvn verify
 
 
-dev-verify: dev-verify-17
-
-dev-verify-17:
-  #!/usr/bin/env bash -l
-  sdk use java ${JAVA_VER_DISTRO_17}
-  mvn -Pdev verify
+dev-verify: dev-verify-21
 
 dev-verify-21:
   #!/usr/bin/env bash -l
@@ -67,37 +46,25 @@ dev-verify-21:
   mvn -Pdev verify
 
 
-docker-clean: docker-clean-17
-
-docker-clean-17:
-  ${DOCKER_CMD} -v ${VOL_NAME}-17:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:17" mvn clean
+docker-clean: docker-clean-21
 
 docker-clean-21:
   ${DOCKER_CMD} -v ${VOL_NAME}-21:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:21" mvn clean
 
 
-docker-clean-install: docker-clean-install-17
-
-docker-clean-install-17: docker-clean-17
-  ${DOCKER_CMD} -v ${VOL_NAME}-17:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:17" mvn -Pui-skip-tests install
+docker-clean-install: docker-clean-install-21
 
 docker-clean-install-21: docker-clean-21
   ${DOCKER_CMD} -v ${VOL_NAME}-21:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:21" mvn -Pui-skip-tests install
 
 
-docker-verify: docker-verify-17
-
-docker-verify-17:
-  ${DOCKER_CMD} -v ${VOL_NAME}-17:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:17" mvn -Pui-skip-tests verify
+docker-verify: docker-verify-21
 
 docker-verify-21:
   ${DOCKER_CMD} -v ${VOL_NAME}-21:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:21" mvn -Pui-skip-tests verify
 
 
-docker-dev-verify: docker-dev-verify-17
-
-docker-dev-verify-17:
-  ${DOCKER_CMD} -v ${VOL_NAME}-17:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:17" mvn -Pdev -Pui-skip-tests verify
+docker-dev-verify: docker-dev-verify-21
 
 docker-dev-verify-21:
   ${DOCKER_CMD} -v ${VOL_NAME}-21:"${M2_REPO}" -v "$(pwd):${BLD_DIR}" -w ${BLD_DIR} "${IMG}:21" mvn -Pdev -Pui-skip-tests verify
